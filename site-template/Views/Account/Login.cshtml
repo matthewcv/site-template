@@ -1,0 +1,40 @@
+﻿@using mywebsite.Controllers
+
+@{
+    ViewBag.Title = "Log in";
+    
+}
+
+
+@if (Request.IsAuthenticated )
+{
+<text>you are logged in to the system.</text>
+}
+else
+{
+    <hgroup class="">
+        <h3>
+            Choose the thing that you want to log in with
+        </h3>
+    </hgroup>
+    <form id="loginForm" method="POST" >
+    <ul>
+        @foreach (IAuthenticationClient client in Model)
+        {
+            <li>@Html.ActionLink(client.ProviderName, "RequestAuth", new {provider = client.ProviderName})</li>
+        }
+    </ul>
+        </form>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript">
+    (function(){
+    $("#loginForm").on("click","a", function(ev) {
+        $("#loginForm").attr("action", $(this).attr("href")).submit();
+        return false;
+    });
+    })();
+    </script>
+}

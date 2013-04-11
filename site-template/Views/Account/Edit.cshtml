@@ -1,0 +1,65 @@
+﻿@model mywebsite.backend.Entity.Profile
+
+@{
+    ViewBag.Title = "Manage Profile";
+}
+
+
+@if (ViewBag.CreateProfile != null && ViewBag.CreateProfile)
+{
+    <div>
+        Welcome.  Update your profile.
+    </div>
+}
+
+<div id="accountEdit">
+    <label>What's your name <input type="text" data-bind="value: profile.DisplayName, validate: profile.DisplayName"/> <span class="" data-bind="text: profile.DisplayName.validationMessages" /></label>
+    <label>What's your email address <input type="text" data-bind="value: profile.EmailAddress, validate:profile.EmailAddress"/><span class="" data-bind="text: profile.EmailAddress.validationMessages" /> </label>
+    <label>Where are you <input type="text" data-bind="value: profile.Location"/> </label>
+    <button data-bind="click: saveProfile, disable: saveDisabled() || !isValid() , text: saveText">Save</button><div id="toastr-target"></div>
+    
+    @if (ViewBag.OtherOauths.Count > 0)
+    {
+        <h3>You can also add another account if you want.</h3>
+            <form id="loginForm" method="POST" >
+
+        <ul>
+            @foreach (IAuthenticationClient client in ViewBag.OtherOauths)
+            {
+              <li>@Html.ActionLink(client.ProviderName, "AddAuth", new {provider = client.ProviderName})</li>
+
+            }
+        </ul>
+     </form>   
+    }
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/account")
+    <script>
+        (function () {
+
+            var p = new account.profile();
+            p.EmailAddress("@Model.EmailAddress");
+            p.DisplayName("@Model.DisplayName");
+            p.Location("@Model.Location");
+            account.app.start(p);
+            
+
+            @if (ViewBag.AddAuthSuccess != null && ViewBag.AddAuthSuccess)
+            {
+<text>
+            toastr.success("Ok, we added that account.");
+</text>
+            }
+            
+            $("#loginForm").on("click", "a", function (ev) {
+                $("#loginForm").attr("action", $(this).attr("href")).submit();
+                return false;
+            });
+
+
+        })();
+    </script>
+}
