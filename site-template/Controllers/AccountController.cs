@@ -9,11 +9,10 @@ using DotNetOpenAuth.AspNet;
 using DotNetOpenAuth.AspNet.Clients;
 using DotNetOpenAuth.OpenId.RelyingParty;
 using Raven.Client;
+using matthewcv.common.Entity;
+using matthewcv.common.Infrastructure;
+using matthewcv.common.Service;
 using mywebsite.App_Start;
-using mywebsite.Infrastructure;
-using mywebsite.backend;
-using mywebsite.backend.Entity;
-using mywebsite.backend.Service;
 
 namespace mywebsite.Controllers
 {

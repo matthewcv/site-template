@@ -1,0 +1,1 @@
+﻿This is fluent validation AbstractValidator<T> classes go.  

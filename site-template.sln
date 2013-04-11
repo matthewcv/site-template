@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "site-template", "site-templ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "site-template.backend", "site-template.backend\site-template.backend.csproj", "{18AD2476-26E0-4FAA-924C-C227110DD427}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "matthewcv.common", "..\matthewcv.common\matthewcv.common\matthewcv.common.csproj", "{C88D2118-C4D8-41B5-B23D-44E9755FDDB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AutomatedRelease|Any CPU = AutomatedRelease|Any CPU
@@ -24,6 +26,12 @@ Global
 		{18AD2476-26E0-4FAA-924C-C227110DD427}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18AD2476-26E0-4FAA-924C-C227110DD427}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18AD2476-26E0-4FAA-924C-C227110DD427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C88D2118-C4D8-41B5-B23D-44E9755FDDB8}.AutomatedRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{C88D2118-C4D8-41B5-B23D-44E9755FDDB8}.AutomatedRelease|Any CPU.Build.0 = Release|Any CPU
+		{C88D2118-C4D8-41B5-B23D-44E9755FDDB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C88D2118-C4D8-41B5-B23D-44E9755FDDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C88D2118-C4D8-41B5-B23D-44E9755FDDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C88D2118-C4D8-41B5-B23D-44E9755FDDB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

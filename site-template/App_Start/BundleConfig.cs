@@ -18,16 +18,7 @@ namespace mywebsite
                         "~/Scripts/Account/models.js",
                         "~/Scripts/Account/app.js"
                 ));
-            bundles.Add(new ScriptBundle("~/bundles/candy").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/bootstrap.js",
-                        "~/Scripts/knockout-{version}.js",
-                        "~/Scripts/sammy-{version}.js",
-                        "~/Scripts/toastr.js",
-                        "~/Scripts/KnockoutValidation.js",
-                        "~/Scripts/Candy/models.js",
-                        "~/Scripts/Candy/app.js"
-                ));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

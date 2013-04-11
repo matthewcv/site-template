@@ -1,0 +1,1 @@
+﻿This is where services go.  They should all inherit from an interface and be registered with Ninject.

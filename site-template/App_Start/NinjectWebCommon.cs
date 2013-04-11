@@ -1,7 +1,7 @@
 using FluentValidation;
-using mywebsite.backend;
-using mywebsite.backend.Service;
-using mywebsite.backend.Validation;
+using SiteTemplate.App_Start;
+using SiteTemplate.Backend.Validation;
+using matthewcv.common.Infrastructure;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(mywebsite.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(mywebsite.App_Start.NinjectWebCommon), "Stop")]
@@ -51,7 +51,7 @@ using Raven.Client.Document;
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
-            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => KernelProvider.Kernel);
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
             RegisterServices(kernel);
             return kernel;
@@ -67,7 +67,6 @@ using Raven.Client.Document;
             kernel.Load<AuthenticationModule>();
             kernel.Load<ValidationModule>();
 
-            kernel.Bind<ICandyService>().To<CandyService>().InRequestScope();
 
         }
     

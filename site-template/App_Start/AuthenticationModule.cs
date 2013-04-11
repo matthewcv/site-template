@@ -12,11 +12,9 @@ using Ninject.Modules;
 using Ninject.Web.Common;
 using Ninject.Web.Mvc.FilterBindingSyntax;
 using Raven.Client;
-using mywebsite.Infrastructure;
-using mywebsite.backend;
-using mywebsite.backend.Service;
+using matthewcv.common.Service;
 
-namespace mywebsite.App_Start
+namespace SiteTemplate.App_Start
 {
     public class AuthenticationModule:NinjectModule
     {

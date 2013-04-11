@@ -7,21 +7,15 @@ using FluentValidation;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Common;
-using mywebsite.backend.Entity;
 
-namespace mywebsite.backend.Validation
+namespace SiteTemplate.Backend.Validation
 {
-    public class ValidationModule:NinjectModule
+    public class ValidationModule:matthewcv.common.Validation.ValidationModule
     {
         public override void Load()
         {
-            
-            Bind<IValidatorFactory>().To<ValidatorFactory>().InSingletonScope();
-            Bind<IValidator<Profile>>().To<ProfileValidator>().InRequestScope();
-            FluentValidation.Mvc.FluentValidationModelValidatorProvider.Configure(p =>
-            {
-                p.ValidatorFactory = Kernel.Get<IValidatorFactory>();
-            });
+            base.Load();
+            //make sure base.Load() is called and then register your validators here
         }
     }
 }

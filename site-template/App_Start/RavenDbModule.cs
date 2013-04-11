@@ -34,7 +34,7 @@ namespace mywebsite.App_Start
 
         private IDocumentStore InitDocStore(IContext context)
         {
-            DocumentStore ds = new DocumentStore { ConnectionStringName = "mywebsite" };
+            DocumentStore ds = new DocumentStore { ConnectionStringName = "site-connection-string" };
             ds.Initialize();
 
             return ds;
