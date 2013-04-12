@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Common;
+using matthewcv.common.Configuration;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
@@ -56,11 +57,15 @@ namespace SiteTemplate.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Load<RavenDbModule>();
             kernel.Load<AuthenticationModule>();
             kernel.Load<ValidationModule>();
 
-
+            kernel.Load(new ConfigurationModule()
+                .WithSiteKey("site-template")
+                .WithSiteName("Site Template")
+                .WithSiteDescription("This is the template for a website.  Copy it and then build your site on it, bro-ham")
+                .WithRavenConnectionStringName("site-connection-string") 
+                );
         }
     
 

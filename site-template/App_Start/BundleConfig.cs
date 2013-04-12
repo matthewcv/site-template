@@ -18,6 +18,15 @@ namespace SiteTemplate
                         "~/Scripts/Account/models.js",
                         "~/Scripts/Account/app.js"
                 ));
+            bundles.Add(new ScriptBundle("~/bundles/admin").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/knockout-{version}.js",
+                        "~/Scripts/sammy-{version}.js",
+                        "~/Scripts/toastr.js",
+                        "~/Scripts/KnockoutValidation.js",
+                        "~/Scripts/Admin/models.js",
+                        "~/Scripts/Admin/app.js"
+                ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
