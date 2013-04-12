@@ -9,7 +9,7 @@ using Ninject.Web.Common;
 using Raven.Client;
 using Raven.Client.Document;
 
-namespace mywebsite.App_Start
+namespace SiteTemplate.App_Start
 {
     public class RavenDbModule : NinjectModule
     {

@@ -12,9 +12,8 @@ using Raven.Client;
 using matthewcv.common.Entity;
 using matthewcv.common.Infrastructure;
 using matthewcv.common.Service;
-using mywebsite.App_Start;
 
-namespace mywebsite.Controllers
+namespace SiteTemplate.Controllers
 {
     [Authorize]
     public class AccountController : Controller

@@ -1,23 +1,16 @@
-using FluentValidation;
 using SiteTemplate.App_Start;
 using SiteTemplate.Backend.Validation;
-using matthewcv.common.Infrastructure;
-
-[assembly: WebActivator.PreApplicationStartMethod(typeof(mywebsite.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(mywebsite.App_Start.NinjectWebCommon), "Stop")]
-
-namespace mywebsite.App_Start
-{
-    using System;
+using System;
 using System.Web;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using mywebsite.Controllers;
 using Ninject;
-using Ninject.Activation;
 using Ninject.Web.Common;
-using Raven.Client;
-using Raven.Client.Document;
 
+[assembly: WebActivator.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
+
+namespace SiteTemplate.App_Start
+{
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -51,7 +44,7 @@ using Raven.Client.Document;
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
-            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => KernelProvider.Kernel);
+            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
             RegisterServices(kernel);
             return kernel;
