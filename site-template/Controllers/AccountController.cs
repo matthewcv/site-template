@@ -5,9 +5,8 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
-using DotNetOpenAuth.AspNet.Clients;
-using DotNetOpenAuth.OpenId.RelyingParty;
+using OAuth2.Client;
+using OAuth2.Models;
 using Raven.Client;
 using matthewcv.common.Entity;
 using matthewcv.common.Infrastructure;
@@ -50,7 +49,9 @@ namespace SiteTemplate.Controllers
             {
                 return View("Login");
             }
-            return new OAuthRequestActionResult(_authService.GetSecurityManager(provider), Url.Action("RequestAuthCallback"));
+            IClient client = _authService.GetClient(provider);
+            return Redirect(client.GetLoginLinkUri(provider));
+            //return new OAuthRequestActionResult(_authService.GetSecurityManager(provider), Url.Action("RequestAuthCallback"));
         }
 
         [HttpPost]
@@ -58,7 +59,9 @@ namespace SiteTemplate.Controllers
         {
             
             Session[SessionKeys.IsAddingAuth] = true;
-            return new OAuthRequestActionResult(_authService.GetSecurityManager(provider), Url.Action("RequestAuthCallback"));
+            IClient client = _authService.GetClient( provider);
+
+            return Redirect(client.GetLoginLinkUri(provider));
         }
 
         [AllowAnonymous]
@@ -68,24 +71,21 @@ namespace SiteTemplate.Controllers
             {
                 return View("Login");
             }
-            
 
-            string providerName = OpenAuthSecurityManager.GetProviderName(HttpContext);
-            OpenAuthSecurityManager m = _authService.GetSecurityManager(providerName);
-            AuthenticationResult verifyAuthentication = m.VerifyAuthentication(Url.Action("RequestAuthCallback"));
-
-            if (verifyAuthentication.IsSuccessful)
+            IClient client = _authService.GetClient(Request.QueryString["state"]);
+            try
             {
+                UserInfo userInfo = client.GetUserInfo(Request.QueryString);
                 if (Request.IsAuthenticated && Session.TestAndRemove(SessionKeys.IsAddingAuth))
                 {
-                    _authService.AddAuthToCurrentProfile(verifyAuthentication);
+                    _authService.AddAuthToCurrentProfile(userInfo);
                     Session[SessionKeys.AddAuthSuccess] = true;
                     return RedirectToAction("Edit");
 
                 }
                 else
                 {
-                    LoginResponse loginResponse = _authService.Login(verifyAuthentication);
+                    LoginResponse loginResponse = _authService.Login(userInfo);
                     if (loginResponse.NewProfileCreated)
                     {
                         Session[SessionKeys.CreateProfile] = true;
@@ -93,8 +93,12 @@ namespace SiteTemplate.Controllers
                     }
                     return RedirectToAction("Index", "Home");
                 }
-            }
 
+            }
+            catch (ApplicationException ae)
+            {
+                //this means that auth didn't happen or there was some error.  User denied the auth or something.
+            }
 
             return RedirectToAction("Login");
         }

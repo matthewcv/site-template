@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DotNetOpenAuth.AspNet;
-using DotNetOpenAuth.AspNet.Clients;
 using FluentValidation;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Modules;
 using Ninject.Web.Common;
+using Ninject.Extensions.Conventions;
 using Ninject.Web.Mvc.FilterBindingSyntax;
+using OAuth2.Client;
+using OAuth2.Client.Impl;
+using OAuth2.Configuration;
 using Raven.Client;
 using matthewcv.common.Service;
 
@@ -20,17 +22,18 @@ namespace SiteTemplate.App_Start
     {
         public override void Load()
         {
-            //Bind<IOpenAuthDataProvider>().To<OAuthDataProvider>().InRequestScope();
-            Bind<IAuthenticationService, IOpenAuthDataProvider>().ToMethod(CreateAuthContext).InRequestScope();
+            Bind<IAuthenticationService>().To<AuthenticationService>().InRequestScope();
+
+            Kernel.Bind(x => x.FromAssemblyContaining<IClient>()
+                .Select(t => t != typeof(OAuth2ConfigurationSection))
+                .BindAllInterfaces()
+                .Configure(c => c.InRequestScope()));
+
+            Bind<IOAuth2Configuration>()
+                .ToMethod(c => c.Kernel.Get<IConfigurationManager>().GetConfigSection<IOAuth2Configuration>("oauth2"))
+                .InSingletonScope();
+
         }
 
-        private AuthenticationService CreateAuthContext(IContext arg)
-        {
-            return new AuthenticationService(arg.Kernel.Get<HttpContextBase>(),arg.Kernel.Get<IDocumentSession>())
-                .AddClient(new GoogleOpenIdClient())
-                .AddClient(new FacebookClient(appId: "620392617974092", appSecret: "c1e39b8944a740ec074ac348316ed337"))
-                ;
-
-        }
     }
 }

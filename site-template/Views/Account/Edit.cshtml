@@ -1,4 +1,5 @@
-﻿@model matthewcv.common.Entity.Profile
+﻿@using OAuth2.Client
+@model matthewcv.common.Entity.Profile
 
 @{
     ViewBag.Title = "Manage Profile";
@@ -24,7 +25,7 @@
             <form id="loginForm" method="POST" >
 
         <ul>
-            @foreach (IAuthenticationClient client in ViewBag.OtherOauths)
+            @foreach (IClient client in ViewBag.OtherOauths)
             {
               <li>@Html.ActionLink(client.ProviderName, "AddAuth", new {provider = client.ProviderName})</li>
 

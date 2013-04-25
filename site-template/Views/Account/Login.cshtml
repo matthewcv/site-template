@@ -1,4 +1,4 @@
-﻿@using SiteTemplate.Controllers
+﻿@using OAuth2.Client
 
 @{
     ViewBag.Title = "Log in";
@@ -19,7 +19,7 @@ else
     </hgroup>
     <form id="loginForm" method="POST" >
     <ul>
-        @foreach (IAuthenticationClient client in Model)
+        @foreach (IClient client in Model)
         {
             <li>@Html.ActionLink(client.ProviderName, "RequestAuth", new {provider = client.ProviderName})</li>
         }
